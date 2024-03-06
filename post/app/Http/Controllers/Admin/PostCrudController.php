@@ -82,7 +82,6 @@ class PostCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        //$this->crud->addColumns($this->getFieldsData(TRUE));
         $this->setupCreateOperation();
     }
 
