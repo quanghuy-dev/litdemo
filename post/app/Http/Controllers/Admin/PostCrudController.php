@@ -39,12 +39,19 @@ class PostCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
+        // CRUD::setFromDb(); // set columns from db columns.
 
         /**
          * Columns can be defined using the fluent syntax:
          * - CRUD::column('price')->type('number');
          */
+
+        $this->crud->addColumns($this->getFieldsData(TRUE));
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->addColumns($this->getFieldsData(TRUE));
     }
 
     /**
@@ -56,8 +63,11 @@ class PostCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(PostRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
-
+        CRUD::field('title')->type('text');
+        CRUD::field('description')->type('text');
+        CRUD::field('image')->type('upload')->withFiles();
+        CRUD::field('status')->type('select_from_array')->options(['1' => 'Enable', '2' => 'Disable']);
+      
         /**
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');
@@ -72,6 +82,38 @@ class PostCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
+        //$this->crud->addColumns($this->getFieldsData(TRUE));
         $this->setupCreateOperation();
+    }
+
+    protected function getFieldsData($show = FALSE){
+        return [
+            [
+                'label' => "Title",
+                'name' => "title",
+                'type' => 'text',
+            ],
+
+            [
+                'label' => "Description",
+                'name' => "description",
+                'type' => 'text',
+            ],
+
+            [
+                'label' => "Status",
+                'name' => "status",
+                'type' => 'select_from_array',
+                'options' => ['1' => 'Enable', '2' => 'Disable'],
+            ],
+
+            [
+                'label' => "Post Image",
+                'name' => "image",
+                'type' => ($show ? 'view' : 'upload'),
+                'view' => 'posts/image',
+                'upload' => true,
+            ],
+        ];
     }
 }
