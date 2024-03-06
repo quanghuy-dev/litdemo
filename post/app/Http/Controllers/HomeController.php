@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Post;
-use Illuminate\Support\Facades\Auth;
-
 
 class HomeController extends Controller
 {
@@ -16,7 +13,22 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware(auth()->user());
+    }
+
+    public function login()
+    {
+        return view('auth/login');
+    }
+
+    public function register()
+    {
+        return view('auth/register');
+    }
+
+    public function home()
+    {
+        return view('home');
     }
 
     /**
@@ -46,47 +58,6 @@ class HomeController extends Controller
             'status' => 200,
             'message' => 'login success',
             'data' => $post,
-        ]);
-    }
-
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-        $token = Auth::guard('api')->attempt($credentials);
-       
-        $user = Auth::guard('api')->user();
-
-        if($token) {
-            return response()->json([
-                'status' => 200,
-                'message' => 'login success',
-                'user' => $user,
-                'authorisation' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
-            ]);
-        } else {
-            return response()->json([
-                'status' => 401,
-                'message' => 'login failed'
-            ]);
-        }
-    }
-
-    public function logout()
-    {
-        Auth::guard('api')->logout();
-    }
-
-    public function me()
-    {
-        $user = Auth::guard('api')->user();
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'success',
-            'user'=> $user
         ]);
     }
 }
