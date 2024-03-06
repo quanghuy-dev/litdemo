@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// User Auth
+Route::post('/login', [App\Http\Controllers\HomeController::class, 'login'])->name('login');
+Route::post('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
+Route::get('/me', [App\Http\Controllers\HomeController::class, 'me'])->name('me');
+
+// User Post 
+Route::get('/posts', [App\Http\Controllers\HomeController::class, 'list_post'])->name('post.list');
+Route::get('/posts/{id}', [App\Http\Controllers\HomeController::class, 'detail_post'])->name('post.detail');

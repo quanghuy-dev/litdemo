@@ -33,9 +33,9 @@
                                 <img src="{{ asset($post->image) }}" height="100" width="100">
                             </td>
                             @if($post->status == 1)
-                                <td style="padding-right: 150px;">Enable</td>
+                            <td style="padding-right: 150px;">Enable</td>
                             @else
-                                <td style="padding-right: 150px;">Disable</td>
+                            <td style="padding-right: 150px;">Disable</td>
                             @endif
                             <td style="padding-right: 150px;">
                                 <a href="/post/{{$post->id}}">Detail</a>
