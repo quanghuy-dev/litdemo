@@ -38,7 +38,7 @@
                                 <td style="padding-right: 150px;">Disable</td>
                             @endif
                             <td style="padding-right: 150px;">
-                                <button href="{{ route('post.detail', ['id' => $post->id]) }}">Detail</button>
+                                <a href="/post/{{$post->id}}">Detail</a>
                             </td>
                         </tr>
                         @endforeach
