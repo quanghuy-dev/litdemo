@@ -6,26 +6,6 @@ use App\Models\Post;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware(auth()->user());
-    }
-
-    public function login()
-    {
-        return view('auth/login');
-    }
-
-    public function register()
-    {
-        return view('auth/register');
-    }
-
     public function home()
     {
         return view('home');
@@ -43,8 +23,6 @@ class HomeController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'success',
-            'current_page' => $posts->currentPage(),
-            'last_page' => $posts->lastPage(),
             'data' => $posts,
         ]);
         

@@ -1,77 +1,96 @@
-@extends('layouts.app')
+<html>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<head>
+    <title>Post</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #17a2b8;
+            height: 100vh;
+        }
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+        #login .container #login-row #login-column #login-box {
+            margin-top: 90px;
+            max-width: 600px;
+            height: 320px;
+            border: 1px solid #9C9C9C;
+            background-color: #EAEAEA;
+        }
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+        #login .container #login-row #login-column #login-box #frm_login {
+            padding: 20px;
+        }
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+        .has-error {
+            border: 1px solid red;
+        }
+    </style>
+</head>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+<body>
+    <div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-14">
+                        <form name="frm_register" class="form" id="frm_register">
+                            @csrf
+                            <h3 class="text-center text-info">Register</h3>
+                            <div class="mb-3">
+                                <label for="name" class="text-info">Name:</label>
+                                <input type="text" class="form-control" size="10px" id="name" name="name" required>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class="mb-3">
+                                <label for="email" class="text-info">Email:</label>
+                                <input type="text" class="form-control" size="10px" id="email" name="email" required>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class="mb-3">
+                                <label for="password" class="text-info">Password:</label>
+                                <input type="password" class="form-control" size="10px" id="password" name="password" required>
                             </div>
-                        </div>
 
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            <div class="mb-3">
+                                <label for="password" class="text-info">Repeat Password:</label>
+                                <input type="password" class="form-control" size="10px" id="re-password" name="re-password">
                             </div>
-                        </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
+                            <div class="mb-3 text-center">
+                                <button type="button" class="btn btn-primary" onclick="register()">Register</button>
                             </div>
-                        </div>
-                    </form>
+                            <div id="err" style="color: red"></div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script>
+        function register() {
+            console.log('here');
+
+            var data = $("#frm_register").serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/register',
+                data: data,
+                success: function(response) {
+                    console.log(response);
+                    if (response.status == 200) {
+                        user_token = response.authorisation.token
+                        window.localStorage.setItem('token', user_token);
+                        window.location.replace('/home');
+                    } else {
+                        $("#err").hide().html("Something went wrong, please try again").fadeIn('slow');
+                    }
+                }
+            });
+
+        }
+    </script>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -15,8 +16,8 @@ use App\Http\Controllers\HomeController;
 */
 
 // Auth
-Route::get('/', [HomeController::class, 'login']);
-Route::get('/register', [HomeController::class, 'register']);
+Route::get('/', [AuthController::class, 'login_form']);
+Route::get('/register', [AuthController::class, 'register_form']);
 
 // Home
 Route::get('/home', [HomeController::class, 'home']);
