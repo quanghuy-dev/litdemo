@@ -8,7 +8,7 @@
 <body>
     <div class="card-body">
         <div class="mb-3 text-end">
-          
+
             <button type="button" class="btn btn-primary" onclick="logout()">Logout</button>
             <p id='username'></p>
         </div>
@@ -21,9 +21,22 @@
                 <th style="padding-right: 150px;">Image</th>
                 <th style="padding-right: 150px;">Status</th>
             </tr>
-
-
-
+            
+            @foreach($posts as $post)
+            <tr>
+                <td style="padding-right: 150px;">{{$post->id}}</td>
+                <td style="padding-right: 150px;">{{$post->title}}</td>
+                <td style="padding-right: 150px;">{{$post->description}}</td>
+                <td style="padding-right: 150px;">
+                    <img src="{{ asset($post->image) }}" height="100" width="100">
+                </td>
+                @if($post->status == 1)
+                <td style="padding-right: 150px;">Enable</td>
+                @else
+                <td style="padding-right: 150px;">Disable</td>
+                @endif
+            </tr>
+            @endforeach
         </table>
 
     </div>
@@ -61,7 +74,7 @@
                     'Authorization': 'Bearer ' + user_token
                 },
                 success: function(response) {
-                    $("#listpost").html(data);
+                    console.log(response);
                 }
             });
         }

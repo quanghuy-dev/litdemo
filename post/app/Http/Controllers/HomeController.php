@@ -8,7 +8,9 @@ class HomeController extends Controller
 {
     public function home()
     {
-        return view('home');
+        $posts = Post::paginate(10);
+
+        return view('home', ['posts' => $posts]);
     }
 
     /**
@@ -25,7 +27,6 @@ class HomeController extends Controller
             'message' => 'success',
             'data' => $posts,
         ]);
-        
     }
     
     public function detail_post($id)
