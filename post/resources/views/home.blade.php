@@ -57,9 +57,10 @@
                     'Authorization': 'Bearer ' + user_token
                 },
                 success: function(response) {
-                    $("#username").text("Welcome " + response.user.name);
                     if (response.user == null) {
-                        window.location.replace('/login');
+                        window.location.replace('/');
+                    } else {
+                        $("#username").text("Welcome " + response.user.name);
                     }
                 }
             });
@@ -87,7 +88,7 @@
                     'Authorization': 'Bearer ' + user_token
                 },
                 success: function(response) {
-                    window.location.replace('/login');
+                    window.location.replace('/');
                 }
             });
         }
