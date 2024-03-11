@@ -67,19 +67,6 @@
 
         }
 
-        function getpost() {
-            $.ajax({
-                type: 'GET',
-                url: '/api/posts',
-                headers: {
-                    'Authorization': 'Bearer ' + user_token
-                },
-                success: function(response) {
-                    console.log(response);
-                }
-            });
-        }
-
         function logout() {
             $.ajax({
                 type: 'POST',

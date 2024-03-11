@@ -6,18 +6,15 @@ use App\Models\Post;
 
 class HomeController extends Controller
 {
+    // function home
     public function home()
     {
         $posts = Post::paginate(10);
 
         return view('home', ['posts' => $posts]);
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    
+    // api for list post
     public function list_post()
     {
         $posts = Post::paginate(10);
@@ -29,6 +26,7 @@ class HomeController extends Controller
         ]);
     }
     
+    // api for detail post
     public function detail_post($id)
     {
         $post = Post::find($id);
