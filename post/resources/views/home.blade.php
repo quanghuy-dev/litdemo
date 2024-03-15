@@ -8,9 +8,15 @@
 <body>
     <div class="card-body">
         <div class="mb-3 text-end">
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <p id='username'> You are Logged In</p>
 
             <button type="button" class="btn btn-primary" onclick="logout()">Logout</button>
-            <p id='username'></p>
         </div>
         <table id='listpost'>
 
@@ -21,7 +27,7 @@
                 <th style="padding-right: 150px;">Image</th>
                 <th style="padding-right: 150px;">Status</th>
             </tr>
-            
+
             @foreach($posts as $post)
             <tr>
                 <td style="padding-right: 150px;">{{$post->id}}</td>
@@ -31,9 +37,9 @@
                     <img src="{{ asset($post->image) }}" height="100" width="100">
                 </td>
                 @if($post->status == 1)
-                <td style="padding-right: 150px;">Enable</td>
+                    <td style="padding-right: 150px;">Enable</td>
                 @else
-                <td style="padding-right: 150px;">Disable</td>
+                    <td style="padding-right: 150px;">Disable</td>
                 @endif
             </tr>
             @endforeach
@@ -44,7 +50,6 @@
     <script>
         $(document).ready(function() {
             me();
-            getpost();
         });
 
         user_token = window.localStorage.getItem('token');
